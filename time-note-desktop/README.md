@@ -1,4 +1,4 @@
-# Time App — Desktop
+# Time Note — Desktop
 
 The same calendar-based time tracker, packaged as a native desktop app via [Tauri 2](https://v2.tauri.app/). Bundles to small native binaries for macOS, Windows, and Linux.
 
@@ -78,15 +78,3 @@ npx @tauri-apps/cli icon path/to/your-icon.png
 That regenerates every required size and format.
 
 **Window size**: edit `src-tauri/tauri.conf.json` → `app.windows[0]`. Defaults are 480×800, min 380×600 (mobile-shaped on purpose — the layout was designed for that aspect ratio).
-
-**Identifier**: `rocks.therainmaker.timeapp` is set as the bundle identifier. Change it in `tauri.conf.json` if you want a different one (note: changing the identifier means existing users' `data.json` won't be found because the app data dir name changes — pick wisely before first release).
-
-## Selling on Gumroad
-
-The `npm run build` output is what you upload. For each platform:
-
-- **macOS**: ship the `.dmg`. To avoid the Gatekeeper "unidentified developer" warning, you'd need an Apple Developer account ($99/yr) and code signing — fine to skip for v1, just include install instructions ("right-click → Open" the first time).
-- **Windows**: ship the `.msi` installer. Code signing is optional but reduces SmartScreen warnings (~$80/yr from a CA, also fine to skip for v1).
-- **Linux**: ship the `.AppImage` — it runs anywhere without installation.
-
-For licensing, the same SHA-256 unlock-key approach you used for Rainmaker works here: gate the app behind a license key check on first launch, validate against a hash list. Since this is a self-contained desktop binary, even simpler than the web version — no server needed.

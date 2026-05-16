@@ -1,8 +1,8 @@
-# Time App — v2 (multi-project)
+# Time Note Mobile
 
-Same calendar-based time tracker, now with multiple projects and per-day notes.
+Calendar-based time tracker, now with multiple projects and per-day notes.
 
-## What's new in v2
+## Feature set
 
 - **Multiple projects**: dropdown next to the title lets you switch between projects, add new ones, or rename/delete from a manage screen. Each project has its own calendar of time entries.
 - **Notes per day**: the entry modal has a textarea for an optional note. Days with notes get a small `·` next to the day number on the calendar.
@@ -64,7 +64,7 @@ npm start
 
 Then open <http://localhost:3000>. Set `PORT` to override (e.g. `PORT=8080 npm start`).
 
-## Deploying to GoDaddy
+## Deploying to node.js server
 
 1. Zip the project folder, **excluding `node_modules`**.
 2. In cPanel → Node.js, point at `server.js` as the entry point.
