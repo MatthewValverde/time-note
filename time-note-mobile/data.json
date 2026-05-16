@@ -1,0 +1,20 @@
+{
+  "settings": {
+    "theme": "dark",
+    "weekStart": "sunday",
+    "dailyGoal": 4,
+    "showYearTotal": true
+  },
+  "projects": [
+    {
+      "id": "default",
+      "name": "Default"
+    }
+  ],
+  "activeProjectId": "default",
+  "projectData": {
+    "default": {
+      "entries": {}
+    }
+  }
+}

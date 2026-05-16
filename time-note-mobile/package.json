@@ -1,0 +1,13 @@
+{
+  "name": "time-app",
+  "version": "2.0.0",
+  "description": "A simple calendar-based time tracker (multi-project)",
+  "main": "server.js",
+  "scripts": {
+    "build": "echo \"No build step required\"",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

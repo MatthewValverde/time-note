@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Time Note</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1 class="app-title">Time Note</h1>
+
+    <div class="header-actions">
+      <!-- Project switcher -->
+      <div class="project-switcher">
+        <button id="projectBtn" class="project-btn" aria-haspopup="listbox" aria-expanded="false">
+          <span id="projectBtnLabel" class="project-btn-label">Default</span>
+          <svg class="project-btn-caret" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <ul id="projectMenu" class="project-menu hidden" role="listbox">
+          <!-- populated dynamically -->
+        </ul>
+      </div>
+
+      <button id="settingsBtn" class="icon-btn" aria-label="Settings">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c0 .65.39 1.23 1 1.51H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <section class="month-bar">
+      <button id="prevBtn" class="nav-btn" aria-label="Previous month">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <h2 id="monthLabel" class="month-label">Month Year</h2>
+      <button id="nextBtn" class="nav-btn" aria-label="Next month">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </section>
+
+    <section class="calendar" aria-label="Calendar">
+      <div id="weekdayRow" class="weekday-row" role="row"></div>
+      <div id="grid" class="grid" role="grid"></div>
+    </section>
+
+    <section class="totals">
+      <div class="total-line">
+        <span class="total-label">Month total</span>
+        <span id="monthTotal" class="total-value">0<span class="unit">h</span></span>
+      </div>
+      <div id="yearTotalLine" class="total-line subtle hidden">
+        <span class="total-label">Year total</span>
+        <span id="yearTotal" class="total-value">0<span class="unit">h</span></span>
+      </div>
+    </section>
+  </main>
+
+  <!-- Time entry modal -->
+  <div id="entryModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="entryModalTitle">
+    <div class="modal-backdrop" data-close="entry"></div>
+    <div class="modal-card">
+      <header class="modal-header">
+        <h3 id="entryModalTitle" class="modal-title">Date</h3>
+        <button class="icon-btn small" data-close="entry" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </header>
+      <div class="modal-body">
+        <label for="hoursInput" class="field-label">Hours worked</label>
+        <input
+          id="hoursInput"
+          type="number"
+          inputmode="decimal"
+          step="0.5"
+          min="0"
+          max="24"
+          placeholder="0"
+          autocomplete="off"
+        />
+
+        <label for="noteInput" class="field-label note-label">Note (optional)</label>
+        <textarea
+          id="noteInput"
+          class="note-input"
+          rows="3"
+          placeholder="What did you work on?"
+          autocomplete="off"
+        ></textarea>
+      </div>
+      <footer class="modal-footer">
+        <button id="clearBtn" class="btn btn-ghost">Clear</button>
+        <div class="footer-right">
+          <button class="btn btn-ghost" data-close="entry">Cancel</button>
+          <button id="saveBtn" class="btn btn-primary">Save</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Settings modal -->
+  <div id="settingsModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+    <div class="modal-backdrop" data-close="settings"></div>
+    <div class="modal-card">
+      <header class="modal-header">
+        <h3 id="settingsModalTitle" class="modal-title">Settings</h3>
+        <button class="icon-btn small" data-close="settings" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </header>
+      <div class="modal-body settings-body">
+        <div class="setting">
+          <span class="field-label">Theme</span>
+          <div class="segmented" role="radiogroup" aria-label="Theme">
+            <button class="seg" data-setting="theme" data-value="dark" role="radio">Dark</button>
+            <button class="seg" data-setting="theme" data-value="light" role="radio">Light</button>
+          </div>
+        </div>
+
+        <div class="setting">
+          <span class="field-label">Week starts on</span>
+          <div class="segmented" role="radiogroup" aria-label="Week starts on">
+            <button class="seg" data-setting="weekStart" data-value="sunday" role="radio">Sun</button>
+            <button class="seg" data-setting="weekStart" data-value="monday" role="radio">Mon</button>
+          </div>
+        </div>
+
+        <div class="setting">
+          <label for="goalInput" class="field-label">Daily goal (hours)</label>
+          <input id="goalInput" type="number" inputmode="decimal" step="0.5" min="0" max="24" placeholder="0 = off" />
+          <p class="hint">Days that hit your goal get a small dot.</p>
+        </div>
+
+        <div class="setting row">
+          <label for="yearToggle" class="field-label">Show year total</label>
+          <input id="yearToggle" type="checkbox" class="switch" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add project modal -->
+  <div id="addProjectModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="addProjectTitle">
+    <div class="modal-backdrop" data-close="addProject"></div>
+    <div class="modal-card">
+      <header class="modal-header">
+        <h3 id="addProjectTitle" class="modal-title">New project</h3>
+        <button class="icon-btn small" data-close="addProject" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </header>
+      <div class="modal-body">
+        <label for="newProjectName" class="field-label">Project name</label>
+        <input id="newProjectName" type="text" placeholder="e.g. Client work" autocomplete="off" maxlength="40" />
+      </div>
+      <footer class="modal-footer">
+        <div class="footer-right footer-right-full">
+          <button class="btn btn-ghost" data-close="addProject">Cancel</button>
+          <button id="createProjectBtn" class="btn btn-primary">Create</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Manage projects modal -->
+  <div id="manageProjectsModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="manageTitle">
+    <div class="modal-backdrop" data-close="manageProjects"></div>
+    <div class="modal-card">
+      <header class="modal-header">
+        <h3 id="manageTitle" class="modal-title">Manage projects</h3>
+        <button class="icon-btn small" data-close="manageProjects" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </header>
+      <div class="modal-body">
+        <ul id="manageList" class="manage-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script type="module" src="main.js" defer></script>
+</body>
+</html>
