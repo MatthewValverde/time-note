@@ -2,12 +2,9 @@
 
 **Live at:** [time-note](https://2mgy1y4jhb.c24.airoapp.ai/)
 
-
 A simple, calendar-based time tracker. Click a day, log your hours, add a note. That's it.
 
 Built as a native desktop app for macOS, Windows, and Linux. Your data lives on your own machine in a plain JSON file you can read, back up, or edit by hand.
-
-![Time Note screenshot placeholder — replace with your own](docs/screenshot.png)
 
 ## Why
 
